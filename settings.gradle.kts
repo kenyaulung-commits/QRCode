@@ -13,6 +13,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = QRCodeApp
-include(:app)
+rootProject.name = "QRCodeApp"
+include(":app")
 
