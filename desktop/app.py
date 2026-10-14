@@ -64,7 +64,7 @@ entry.bind("<KeyRelease>", generate_qr)
 
 # Clear Button
 btn_frame = tk.Frame(root)
-btn_frame.pack(py=10)
+btn_frame.pack(pady=10)
 
 clear_btn = tk.Button(btn_frame, text="Clear & Start Over", command=clear_input, font=("Segoe UI", 9))
 clear_btn.pack()
