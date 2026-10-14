@@ -1,5 +1,3 @@
-kotlin
-
 package com.example.qrcodeapp
 
 import android.graphics.Bitmap
