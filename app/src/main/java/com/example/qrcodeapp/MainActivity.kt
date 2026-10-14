@@ -7,6 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -57,6 +61,7 @@ fun QRCodeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // Text Input with Leading Icon & Trailing Clear Button
         OutlinedTextField(
             value = inputText,
             onValueChange = {
@@ -64,19 +69,59 @@ fun QRCodeScreen() {
                 qrBitmap = generateQRCode(it)
             },
             label = { Text("Enter URL or text") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.QrCode,
+                    contentDescription = "QR Icon"
+                )
+            },
+            trailingIcon = {
+                if (inputText.isNotEmpty()) {
+                    IconButton(onClick = {
+                        inputText = ""
+                        qrBitmap = null
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = "Clear input"
+                        )
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
+        // Display QR Code or Placeholder
         qrBitmap?.let { bitmap ->
             Image(
                 bitmap = bitmap.asImageBitmap(),
-                contentDescription = "QR Code",
-                modifier = Modifier.size(260.dp)
+                contentDescription = "Generated QR Code",
+                modifier = Modifier.size(240.dp)
             )
-        } ?: Text("Type text above to display QR code", color = MaterialTheme.colorScheme.outline)
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Start Over Button
+            OutlinedButton(
+                onClick = {
+                    inputText = ""
+                    qrBitmap = null
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Start Over")
+            }
+        } ?: Text(
+            text = "Type text above to display QR code",
+            color = MaterialTheme.colorScheme.outline
+        )
     }
 }
-
